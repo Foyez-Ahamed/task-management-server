@@ -32,6 +32,23 @@ async function run() {
 
     // operations //
 
+    const taskCollections = client.db('taskManagement').collection('task');
+
+
+    // CRUD // 
+    app.post('/api/createTask', async(req, res) => {
+        const taskInfo = req.body
+        const result = await taskCollections.insertOne(taskInfo)
+        res.send(result);
+    })
+
+    app.get('/api/getTask/:email', async(req, res) => {
+        const email = req.params.email
+        const query = { userEmail : email }
+        const result = await taskCollections.find(query).toArray();
+        res.send(result)
+    })
+    // CRUD // 
 
 
     // operations //
